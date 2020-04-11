@@ -21,12 +21,13 @@ def ExtractFrames(videoPath, lotName, camera, skipCount):
         frameNum += 1
 
     video.release()
-    cv.destroyAllWindows()
 
 
 if __name__ == "__main__":
     videoPath = input("Enter video file path: ")
-    lot, camera, skipCount = input("Enter lot name, camera, and frame skip count: ").split()
+    lot = input("Enter lot name: ")
+    camera = input("Enter camera number: ")
+    skipCount = input("Enter frame skip count: ")
     skipCount = int(skipCount)
 
     ExtractFrames(videoPath, lot, camera, skipCount)
