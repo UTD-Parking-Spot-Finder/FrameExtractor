@@ -5,19 +5,18 @@ import cv2 as cv
 def ExtractFrames(videoPath, lotName, camera, skipCount):
     video = cv.VideoCapture(videoPath)
     path = os.path.join(os.getcwd(), lotName, camera)
-    os.makedirs(path)
+    if not os.path.exists(path):
+        os.makedirs(path)
 
     print("Saving images to {}".format(path))
 
     frameNum = 0
     while video.isOpened():
+        video.set(cv.CAP_PROP_POS_FRAMES, frameNum * skipCount)
         retval, frame = video.read()
-
         if retval is False:
             break
-        if frameNum % skipCount == 0:
-            cv.imwrite(os.path.join(path, lotName + "_" + camera + "_Frame" + str(frameNum) + ".png"), frame)
-
+        cv.imwrite(os.path.join(path, lotName + "_" + camera + "_Frame" + str(frameNum) + ".png"), frame)
         frameNum += 1
 
     video.release()
